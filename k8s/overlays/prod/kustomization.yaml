@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: claude-monitoring-prod
+
+namePrefix: prod-
+
+resources:
+- ../../base
+
+patches:
+- path: otel-collector-patch.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: otel-collector
+- path: prometheus-patch.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: prometheus
+- path: grafana-patch.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: grafana
+
+labels:
+- pairs:
+    environment: prod
+
+replicas:
+- name: otel-collector
+  count: 2
+- name: prometheus
+  count: 1
+- name: grafana
+  count: 1
