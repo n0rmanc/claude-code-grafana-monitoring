@@ -25,6 +25,15 @@ data:
     admin_user = admin
     admin_password = admin
 
+  dashboards.yaml: |
+    apiVersion: 1
+    providers:
+    - name: default
+      folder: ""
+      type: file
+      options:
+        path: /var/lib/grafana/dashboards
+
   datasources.yaml: |
     apiVersion: 1
     datasources:
@@ -38,8 +47,8 @@ data:
   claude-code-dashboard.json: |
     {
         "id": null,
-        "uid": "claude-code-monitoring-v2",
-        "title": "Claude Code Monitoring",
+        "uid": "claude-code-monitoring-v9",
+        "title": "Claude Code Monitoring (Organized)",
         "tags": ["claude", "code", "monitoring"],
         "timezone": "browser",
         "schemaVersion": 30,
@@ -50,49 +59,22 @@ data:
         "graphTooltip": 0,
         "links": [],
         "liveNow": false,
+        "time": {
+          "from": "now/d",
+          "to": "now"
+        },
         "panels": [
           {
-            "id": 1,
-            "title": "Lines of Code Modified",
-            "type": "graph",
-            "datasource": "Prometheus",
-            "targets": [
-              {
-                "expr": "sum(claude_code_claude_code_lines_of_code_count_total)",
-                "legendFormat": "Lines Modified"
-              }
-            ],
-            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
-          },
-          {
-            "id": 2,
-            "title": "Token Usage",
-            "type": "graph",
-            "datasource": "Prometheus",
-            "targets": [
-              {
-                "expr": "sum by (type) (claude_code_claude_code_token_usage_tokens_total)",
-                "legendFormat": "{{type}}"
-              }
-            ],
-            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
-          },
-          {
-            "id": 3,
-            "title": "API Request Cost",
-            "type": "graph",
-            "datasource": "Prometheus",
-            "targets": [
-              {
-                "expr": "rate(claude_code_claude_code_cost_usage_USD_total[5m])",
-                "legendFormat": "Cost per minute"
-              }
-            ],
-            "gridPos": {"h": 8, "w": 24, "x": 0, "y": 8}
+            "id": 100,
+            "title": "💰 Cost Overview",
+            "type": "row",
+            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+            "collapsed": false
           },
           {
             "id": 4,
-            "title": "Today's Total Cost",
+            "title": "Daily Cost (Today So Far)",
+            "description": "從今日午夜開始到現在的總成本",
             "type": "stat",
             "datasource": "Prometheus",
             "fieldConfig": {
@@ -101,18 +83,9 @@ data:
                 "thresholds": {
                   "mode": "absolute",
                   "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    },
-                    {
-                      "color": "yellow", 
-                      "value": 10
-                    },
-                    {
-                      "color": "red",
-                      "value": 50
-                    }
+                    {"color": "green", "value": null},
+                    {"color": "yellow", "value": 10},
+                    {"color": "red", "value": 50}
                   ]
                 },
                 "unit": "currencyUSD",
@@ -126,9 +99,7 @@ data:
               "justifyMode": "auto",
               "orientation": "auto",
               "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
+                "calcs": ["lastNotNull"],
                 "fields": "",
                 "values": false
               },
@@ -137,16 +108,17 @@ data:
             },
             "targets": [
               {
-                "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total[1d]))",
-                "legendFormat": "Today's Cost",
+                "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total[$__range]))",
+                "legendFormat": "Daily Cost",
                 "refId": "A"
               }
             ],
-            "gridPos": {"h": 4, "w": 8, "x": 0, "y": 16}
+            "gridPos": {"h": 4, "w": 8, "x": 0, "y": 1}
           },
           {
             "id": 5,
-            "title": "Yesterday's Total Cost",
+            "title": "Cost (Last 24h)",
+            "description": "過去 24 小時的滾動成本",
             "type": "stat",
             "datasource": "Prometheus",
             "fieldConfig": {
@@ -154,12 +126,7 @@ data:
                 "mappings": [],
                 "thresholds": {
                   "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    }
-                  ]
+                  "steps": [{"color": "blue", "value": null}]
                 },
                 "unit": "currencyUSD",
                 "decimals": 4
@@ -172,9 +139,7 @@ data:
               "justifyMode": "auto",
               "orientation": "auto",
               "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
+                "calcs": ["lastNotNull"],
                 "fields": "",
                 "values": false
               },
@@ -183,16 +148,151 @@ data:
             },
             "targets": [
               {
-                "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total[1d] offset 1d))",
-                "legendFormat": "Yesterday's Cost",
+                "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total[24h]))",
+                "legendFormat": "24h Cost",
                 "refId": "A"
               }
             ],
-            "gridPos": {"h": 4, "w": 8, "x": 8, "y": 16}
+            "gridPos": {"h": 4, "w": 8, "x": 8, "y": 1}
           },
           {
-            "id": 6,
-            "title": "Active Time",
+            "id": 20,
+            "title": "Active Sessions Cost",
+            "description": "目前活躍 sessions 的累積成本",
+            "type": "stat",
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [{"color": "purple", "value": null}]
+                },
+                "unit": "currencyUSD",
+                "decimals": 4
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": ["lastNotNull"],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "targets": [
+              {
+                "expr": "sum(max by (session_id) (claude_code_claude_code_cost_usage_USD_total))",
+                "legendFormat": "Active Cost",
+                "refId": "A"
+              }
+            ],
+            "gridPos": {"h": 4, "w": 8, "x": 16, "y": 1}
+          },
+          {
+            "id": 3,
+            "title": "API Request Cost Trend",
+            "type": "timeseries",
+            "datasource": "Prometheus",
+            "targets": [
+              {
+                "expr": "rate(claude_code_claude_code_cost_usage_USD_total[5m])",
+                "legendFormat": "Cost per second"
+              }
+            ],
+            "gridPos": {"h": 6, "w": 24, "x": 0, "y": 5}
+          },
+          {
+            "id": 103,
+            "title": "📈 Cost Analysis",
+            "type": "row",
+            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 11},
+            "collapsed": false
+          },
+          {
+            "id": 25,
+            "title": "Cost by Model",
+            "description": "當天各模型的成本分佈",
+            "type": "piechart",
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [{"color": "green", "value": null}]
+                },
+                "unit": "currencyUSD",
+                "decimals": 4
+              },
+              "overrides": []
+            },
+            "options": {
+              "reduceOptions": {
+                "calcs": ["lastNotNull"],
+                "fields": "",
+                "values": false
+              },
+              "pieType": "pie",
+              "tooltip": {"mode": "single"},
+              "legend": {
+                "displayMode": "visible",
+                "placement": "bottom"
+              }
+            },
+            "targets": [
+              {
+                "expr": "sum by (model) (increase(claude_code_claude_code_cost_usage_USD_total[$__range]))",
+                "legendFormat": "{{model}}",
+                "refId": "A"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12}
+          },
+          {
+            "id": 26,
+            "title": "Hourly Cost Trend",
+            "description": "今天每小時的成本趨勢",
+            "type": "timeseries",
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [{"color": "green", "value": null}]
+                },
+                "unit": "currencyUSD",
+                "decimals": 4
+              },
+              "overrides": []
+            },
+            "options": {
+              "tooltip": {"mode": "multi"},
+              "legend": {
+                "displayMode": "visible",
+                "placement": "bottom"
+              }
+            },
+            "targets": [
+              {
+                "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total[1h]))",
+                "legendFormat": "Cost per hour",
+                "refId": "A"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12}
+          },
+          {
+            "id": 27,
+            "title": "Cost Efficiency: $/Line",
+            "description": "每行程式碼的平均成本",
             "type": "stat",
             "datasource": "Prometheus",
             "fieldConfig": {
@@ -201,13 +301,100 @@ data:
                 "thresholds": {
                   "mode": "absolute",
                   "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    }
+                    {"color": "green", "value": null},
+                    {"color": "yellow", "value": 0.01},
+                    {"color": "red", "value": 0.05}
                   ]
                 },
-                "unit": "s",
+                "unit": "currencyUSD",
+                "decimals": 6
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": ["lastNotNull"],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "targets": [
+              {
+                "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total[$__range])) / (sum(increase(claude_code_claude_code_lines_of_code_count_total[$__range])) > 0)",
+                "legendFormat": "Cost per line",
+                "refId": "A"
+              }
+            ],
+            "gridPos": {"h": 4, "w": 6, "x": 0, "y": 20}
+          },
+          {
+            "id": 28,
+            "title": "Cost Efficiency: $/Commit",
+            "description": "每個 commit 的平均成本",
+            "type": "stat",
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {"color": "green", "value": null},
+                    {"color": "yellow", "value": 1},
+                    {"color": "red", "value": 5}
+                  ]
+                },
+                "unit": "currencyUSD",
+                "decimals": 4
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": ["lastNotNull"],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "targets": [
+              {
+                "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total[$__range])) / (sum(increase(claude_code_claude_code_commit_count_total[$__range])) > 0)",
+                "legendFormat": "Cost per commit",
+                "refId": "A"
+              }
+            ],
+            "gridPos": {"h": 4, "w": 6, "x": 6, "y": 20}
+          },
+          {
+            "id": 29,
+            "title": "Token Efficiency: Tokens/$",
+            "description": "每美元獲得的 tokens 數量",
+            "type": "stat",
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {"color": "red", "value": null},
+                    {"color": "yellow", "value": 100000},
+                    {"color": "green", "value": 500000}
+                  ]
+                },
+                "unit": "short",
                 "decimals": 0
               },
               "overrides": []
@@ -218,9 +405,7 @@ data:
               "justifyMode": "auto",
               "orientation": "auto",
               "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
+                "calcs": ["lastNotNull"],
                 "fields": "",
                 "values": false
               },
@@ -229,169 +414,25 @@ data:
             },
             "targets": [
               {
-                "expr": "sum(claude_code_claude_code_active_time_seconds_total)",
-                "legendFormat": "Active Time",
+                "expr": "sum(increase(claude_code_claude_code_token_usage_tokens_total[$__range])) / (sum(increase(claude_code_claude_code_cost_usage_USD_total[$__range])) > 0)",
+                "legendFormat": "Tokens per dollar",
                 "refId": "A"
               }
             ],
-            "gridPos": {"h": 4, "w": 8, "x": 16, "y": 16}
+            "gridPos": {"h": 4, "w": 6, "x": 12, "y": 20}
           },
           {
-            "id": 7,
-            "title": "Total Sessions",
-            "type": "stat",
+            "id": 30,
+            "title": "Cost Accumulation",
+            "description": "當天成本累積趨勢",
+            "type": "timeseries",
             "datasource": "Prometheus",
             "fieldConfig": {
               "defaults": {
                 "mappings": [],
                 "thresholds": {
                   "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    }
-                  ]
-                },
-                "unit": "short"
-              },
-              "overrides": []
-            },
-            "options": {
-              "colorMode": "value",
-              "graphMode": "none",
-              "justifyMode": "center",
-              "orientation": "auto",
-              "reduceOptions": {
-                "calcs": [
-                  "sum"
-                ],
-                "fields": "",
-                "values": false
-              },
-              "text": {
-                "titleSize": 20,
-                "valueSize": 60
-              },
-              "textMode": "value"
-            },
-            "targets": [
-              {
-                "expr": "scalar(count(count by (session_id) (claude_code_claude_code_cost_usage_USD_total)))",
-                "legendFormat": "",
-                "refId": "A",
-                "format": "table",
-                "instant": true
-              }
-            ],
-            "gridPos": {"h": 4, "w": 8, "x": 0, "y": 20}
-          },
-          {
-            "id": 8,
-            "title": "Git Commits",
-            "type": "stat",
-            "datasource": "Prometheus",
-            "fieldConfig": {
-              "defaults": {
-                "mappings": [],
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    }
-                  ]
-                },
-                "unit": "short"
-              },
-              "overrides": []
-            },
-            "options": {
-              "colorMode": "value",
-              "graphMode": "area",
-              "justifyMode": "auto",
-              "orientation": "auto",
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
-                "fields": "",
-                "values": false
-              },
-              "text": {},
-              "textMode": "auto"
-            },
-            "targets": [
-              {
-                "expr": "sum(claude_code_claude_code_commit_count_total)",
-                "legendFormat": "Total Commits",
-                "refId": "A"
-              }
-            ],
-            "gridPos": {"h": 4, "w": 8, "x": 8, "y": 20}
-          },
-          {
-            "id": 9,
-            "title": "Tool Decisions",
-            "type": "stat",
-            "datasource": "Prometheus",
-            "fieldConfig": {
-              "defaults": {
-                "mappings": [],
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    }
-                  ]
-                },
-                "unit": "short"
-              },
-              "overrides": []
-            },
-            "options": {
-              "colorMode": "value",
-              "graphMode": "area",
-              "justifyMode": "auto",
-              "orientation": "auto",
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
-                "fields": "",
-                "values": false
-              },
-              "text": {},
-              "textMode": "auto"
-            },
-            "targets": [
-              {
-                "expr": "sum(claude_code_claude_code_code_edit_tool_decision_total)",
-                "legendFormat": "Tool Decisions",
-                "refId": "A"
-              }
-            ],
-            "gridPos": {"h": 4, "w": 8, "x": 16, "y": 20}
-          },
-          {
-            "id": 10,
-            "title": "Cost by Model",
-            "type": "piechart",
-            "datasource": "Prometheus",
-            "fieldConfig": {
-              "defaults": {
-                "mappings": [],
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    }
-                  ]
+                  "steps": [{"color": "blue", "value": null}]
                 },
                 "unit": "currencyUSD",
                 "decimals": 4
@@ -399,230 +440,216 @@ data:
               "overrides": []
             },
             "options": {
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
-                "fields": "",
-                "values": false
-              },
-              "pieType": "pie",
-              "tooltip": {
-                "mode": "single",
-                "sort": "none"
-              },
+              "tooltip": {"mode": "single"},
               "legend": {
-                "displayMode": "list",
-                "placement": "right",
-                "showLegend": true,
-                "values": ["value"]
+                "displayMode": "visible",
+                "placement": "bottom"
               }
             },
             "targets": [
               {
-                "expr": "sum by (model) (claude_code_claude_code_cost_usage_USD_total)",
-                "legendFormat": "{{model}}",
+                "expr": "sum(claude_code_claude_code_cost_usage_USD_total)",
+                "legendFormat": "Cumulative Cost",
                 "refId": "A"
               }
             ],
-            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24}
+            "gridPos": {"h": 4, "w": 6, "x": 18, "y": 20}
           },
           {
-            "id": 11,
-            "title": "Token Usage by Type",
-            "type": "graph",
+            "id": 101,
+            "title": "📊 Usage Statistics",
+            "type": "row",
+            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 24},
+            "collapsed": false
+          },
+          {
+            "id": 21,
+            "title": "Daily Tokens",
+            "type": "stat",
             "datasource": "Prometheus",
             "fieldConfig": {
               "defaults": {
-                "custom": {
-                  "axisLabel": "",
-                  "axisPlacement": "auto",
-                  "barAlignment": 0,
-                  "drawStyle": "line",
-                  "fillOpacity": 10,
-                  "gradientMode": "none",
-                  "hideFrom": {
-                    "tooltip": false,
-                    "viz": false,
-                    "legend": false
-                  },
-                  "lineInterpolation": "linear",
-                  "lineWidth": 1,
-                  "pointSize": 5,
-                  "scaleDistribution": {
-                    "type": "linear"
-                  },
-                  "showPoints": "never",
-                  "spanNulls": false,
-                  "stacking": {
-                    "group": "A",
-                    "mode": "none"
-                  },
-                  "thresholdsStyle": {
-                    "mode": "off"
-                  }
-                },
                 "mappings": [],
                 "thresholds": {
                   "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    }
-                  ]
+                  "steps": [{"color": "green", "value": null}]
                 },
-                "unit": "short"
+                "unit": "short",
+                "decimals": 0
               },
               "overrides": []
             },
             "options": {
-              "legend": {
-                "calcs": [],
-                "displayMode": "list",
-                "placement": "bottom",
-                "showLegend": true
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": ["lastNotNull"],
+                "fields": "",
+                "values": false
               },
-              "tooltip": {
-                "mode": "multi",
-                "sort": "none"
-              }
+              "text": {},
+              "textMode": "auto"
             },
             "targets": [
               {
-                "expr": "sum by (model, type) (claude_code_claude_code_token_usage_tokens_total)",
-                "legendFormat": "{{model}} - {{type}}",
+                "expr": "sum(increase(claude_code_claude_code_token_usage_tokens_total[$__range]))",
+                "legendFormat": "Tokens",
                 "refId": "A"
               }
             ],
-            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24}
+            "gridPos": {"h": 4, "w": 6, "x": 0, "y": 25}
           },
           {
-            "id": 12,
-            "title": "User Summary Table",
-            "type": "table",
+            "id": 22,
+            "title": "Daily Code Lines",
+            "type": "stat",
             "datasource": "Prometheus",
             "fieldConfig": {
               "defaults": {
                 "mappings": [],
                 "thresholds": {
                   "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    }
-                  ]
+                  "steps": [{"color": "orange", "value": null}]
                 },
-                "custom": {
-                  "align": "auto",
-                  "cellOptions": {
-                    "type": "auto"
-                  },
-                  "inspect": false
-                }
+                "unit": "short",
+                "decimals": 0
               },
-              "overrides": [
-                {
-                  "matcher": {
-                    "id": "byName",
-                    "options": "Total Cost"
-                  },
-                  "properties": [
-                    {
-                      "id": "unit",
-                      "value": "currencyUSD"
-                    }
-                  ]
-                },
-                {
-                  "matcher": {
-                    "id": "byName", 
-                    "options": "Total Tokens"
-                  },
-                  "properties": [
-                    {
-                      "id": "unit",
-                      "value": "short"
-                    }
-                  ]
-                }
-              ]
+              "overrides": []
             },
             "options": {
-              "showHeader": true,
-              "cellHeight": "sm",
-              "footer": {
-                "show": false,
-                "reducer": ["sum"],
-                "countRows": false,
-                "fields": ""
-              }
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": ["lastNotNull"],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
             },
             "targets": [
               {
-                "expr": "sum by (user_email, organization_id) (claude_code_claude_code_cost_usage_USD_total)",
-                "legendFormat": "",
-                "refId": "A",
-                "format": "table",
-                "instant": true
-              },
-              {
-                "expr": "sum by (user_email, organization_id) (claude_code_claude_code_token_usage_tokens_total)",
-                "legendFormat": "",
-                "refId": "B", 
-                "format": "table",
-                "instant": true
-              },
-              {
-                "expr": "sum by (user_email, organization_id) (claude_code_claude_code_lines_of_code_count_total)",
-                "legendFormat": "",
-                "refId": "C",
-                "format": "table", 
-                "instant": true
+                "expr": "sum(increase(claude_code_claude_code_lines_of_code_count_total[$__range]))",
+                "legendFormat": "Lines",
+                "refId": "A"
               }
             ],
-            "transformations": [
-              {
-                "id": "merge",
-                "options": {}
+            "gridPos": {"h": 4, "w": 6, "x": 6, "y": 25}
+          },
+          {
+            "id": 23,
+            "title": "Daily Commits",
+            "type": "stat",
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [{"color": "blue", "value": null}]
+                },
+                "unit": "short",
+                "decimals": 0
               },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": ["lastNotNull"],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "targets": [
               {
-                "id": "organize",
-                "options": {
-                  "excludeByName": {
-                    "Time": true,
-                    "organization_id": false
-                  },
-                  "indexByName": {},
-                  "renameByName": {
-                    "user_email": "User Email",
-                    "organization_id": "Organization", 
-                    "Value #A": "Total Cost ($)",
-                    "Value #B": "Total Tokens",
-                    "Value #C": "Lines of Code"
-                  }
-                }
+                "expr": "sum(increase(claude_code_claude_code_commit_count_total[$__range]))",
+                "legendFormat": "Commits",
+                "refId": "A"
               }
             ],
-            "gridPos": {"h": 8, "w": 24, "x": 0, "y": 32}
+            "gridPos": {"h": 4, "w": 6, "x": 12, "y": 25}
+          },
+          {
+            "id": 24,
+            "title": "Active Sessions",
+            "type": "stat",
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [{"color": "cyan", "value": null}]
+                },
+                "unit": "short",
+                "decimals": 0
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": ["lastNotNull"],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "targets": [
+              {
+                "expr": "count(count by (session_id) (claude_code_claude_code_cost_usage_USD_total))",
+                "legendFormat": "Sessions",
+                "refId": "A"
+              }
+            ],
+            "gridPos": {"h": 4, "w": 6, "x": 18, "y": 25}
+          },
+          {
+            "id": 102,
+            "title": "📈 Real-time Activity",
+            "type": "row",
+            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 29},
+            "collapsed": false
+          },
+          {
+            "id": 1,
+            "title": "Lines of Code Modified",
+            "type": "timeseries",
+            "datasource": "Prometheus",
+            "targets": [
+              {
+                "expr": "sum(rate(claude_code_claude_code_lines_of_code_count_total[5m]) * 60)",
+                "legendFormat": "Lines per minute"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 30}
+          },
+          {
+            "id": 2,
+            "title": "Token Usage Rate",
+            "type": "timeseries",
+            "datasource": "Prometheus",
+            "targets": [
+              {
+                "expr": "sum by (type) (rate(claude_code_claude_code_token_usage_tokens_total[5m]) * 60)",
+                "legendFormat": "{{type}} tokens/min"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 30}
           }
-        ],
-        "time": {
-          "from": "now-6h",
-          "to": "now"
-        }
-    }
-
-  dashboards.yaml: |
-    apiVersion: 1
-    providers:
-      - name: 'Claude Code Dashboards'
-        orgId: 1
-        folder: ''
-        type: file
-        disableDeletion: false
-        updateIntervalSeconds: 10
-        allowUiUpdates: true
-        options:
-          path: /var/lib/grafana/dashboards
+        ]
+      }
