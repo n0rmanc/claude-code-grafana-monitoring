@@ -3,10 +3,7 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
+        "datasource": "Prometheus",
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -35,10 +32,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "從今日午夜開始到現在的總成本",
       "fieldConfig": {
         "defaults": {
@@ -92,10 +86,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "legendFormat": "Daily Cost",
           "refId": "A"
@@ -105,10 +96,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "過去 24 小時的滾動成本",
       "fieldConfig": {
         "defaults": {
@@ -154,10 +142,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[24h]))",
           "legendFormat": "24h Cost",
           "refId": "A"
@@ -167,10 +152,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "目前活躍 sessions 的累積成本",
       "fieldConfig": {
         "defaults": {
@@ -216,10 +198,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(max by (session_id) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}))",
           "legendFormat": "Active Cost",
           "refId": "A"
@@ -229,10 +208,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -310,10 +286,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "rate(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[5m])",
           "legendFormat": "Cost per second",
           "refId": "A"
@@ -336,10 +309,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "當天各模型的成本分佈",
       "fieldConfig": {
         "defaults": {
@@ -389,10 +359,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (model) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "legendFormat": "{{model}}",
           "refId": "A"
@@ -402,10 +369,7 @@
       "type": "piechart"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "今天每小時的成本趨勢",
       "fieldConfig": {
         "defaults": {
@@ -482,10 +446,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[1h]))",
           "legendFormat": "Cost per hour",
           "refId": "A"
@@ -495,10 +456,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "每行程式碼的平均成本",
       "fieldConfig": {
         "defaults": {
@@ -552,10 +510,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) / (sum(increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) > 0)",
           "legendFormat": "Cost per line",
           "refId": "A"
@@ -565,10 +520,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "每個 commit 的平均成本",
       "fieldConfig": {
         "defaults": {
@@ -622,10 +574,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) / (sum(increase(claude_code_claude_code_commit_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) > 0)",
           "legendFormat": "Cost per commit",
           "refId": "A"
@@ -635,10 +584,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "每美元獲得的 tokens 數量",
       "fieldConfig": {
         "defaults": {
@@ -692,10 +638,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) / (sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) > 0)",
           "legendFormat": "Tokens per dollar",
           "refId": "A"
@@ -705,10 +648,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "當天成本累積趨勢",
       "fieldConfig": {
         "defaults": {
@@ -785,10 +725,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"})",
           "legendFormat": "Cumulative Cost",
           "refId": "A"
@@ -811,10 +748,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -859,10 +793,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "legendFormat": "Tokens",
           "refId": "A"
@@ -872,10 +803,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -920,10 +848,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "legendFormat": "Lines",
           "refId": "A"
@@ -933,10 +858,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -981,10 +903,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(increase(claude_code_claude_code_commit_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "legendFormat": "Commits",
           "refId": "A"
@@ -994,10 +913,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -1042,10 +958,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "count(count by (session_id) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}))",
           "legendFormat": "Sessions",
           "refId": "A"
@@ -1068,10 +981,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1149,10 +1059,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(rate(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[5m]) * 60)",
           "legendFormat": "Lines per minute",
           "refId": "A"
@@ -1162,10 +1069,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1243,10 +1147,7 @@
       "pluginVersion": "11.6.0+security-01",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (type) (rate(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[5m]) * 60)",
           "legendFormat": "{{type}} tokens/min",
           "refId": "A"
@@ -1269,10 +1170,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "系統中的總用戶數量",
       "fieldConfig": {
         "defaults": {
@@ -1314,10 +1212,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "count(count by (user_email) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}))",
           "legendFormat": "Total Users",
           "refId": "A"
@@ -1327,10 +1222,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "今日有活動的用戶數量",
       "fieldConfig": {
         "defaults": {
@@ -1372,10 +1264,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "count(count by (user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]) > 0))",
           "legendFormat": "Active Users Today",
           "refId": "A"
@@ -1385,10 +1274,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "今日平均每用戶成本",
       "fieldConfig": {
         "defaults": {
@@ -1438,10 +1324,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) / count(count by (user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]) > 0))",
           "legendFormat": "Avg Cost per User",
           "refId": "A"
@@ -1451,10 +1334,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "有活動用戶 vs 總用戶比例",
       "fieldConfig": {
         "defaults": {
@@ -1504,10 +1384,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "count(count by (user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]) > 0)) / count(count by (user_email) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}))",
           "legendFormat": "Active User Ratio",
           "refId": "A"
@@ -1517,10 +1394,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "用戶成本排行和詳細統計",
       "fieldConfig": {
         "defaults": {
@@ -1615,10 +1489,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
@@ -1626,10 +1497,7 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (user_email) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
@@ -1637,10 +1505,7 @@
           "refId": "B"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (user_email) (increase(claude_code_claude_code_commit_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
@@ -1648,10 +1513,7 @@
           "refId": "C"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (user_email) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
@@ -1707,10 +1569,7 @@
       "type": "table"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "各用戶成本占比分佈",
       "fieldConfig": {
         "defaults": {
@@ -1755,10 +1614,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "legendFormat": "{{user_email}}",
           "refId": "A"
@@ -1768,10 +1624,7 @@
       "type": "piechart"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "各用戶使用的 Terminal 類型",
       "fieldConfig": {
         "defaults": {
@@ -1806,10 +1659,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "count by (user_email, terminal_type) (group by (user_email, terminal_type, session_id) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}))",
           "legendFormat": "{{user_email}} - {{terminal_type}}",
           "refId": "A"
@@ -1819,10 +1669,7 @@
       "type": "barchart"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "各用戶使用的模型分佈",
       "fieldConfig": {
         "defaults": {
@@ -1857,10 +1704,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (user_email, model) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "legendFormat": "{{user_email}} - {{model}}",
           "refId": "A"
@@ -1883,10 +1727,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "成本按地點分組顯示",
       "fieldConfig": {
         "defaults": {
@@ -1919,10 +1760,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (location) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "legendFormat": "{{location}}",
           "refId": "A"
@@ -1932,10 +1770,7 @@
       "type": "piechart"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "Token 使用量按地點分組",
       "fieldConfig": {
         "defaults": {
@@ -1968,10 +1803,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (location) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "legendFormat": "{{location}}",
           "refId": "A"
@@ -1981,10 +1813,7 @@
       "type": "piechart"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "按設備類型顯示活動",
       "fieldConfig": {
         "defaults": {
@@ -2031,10 +1860,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (device) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "legendFormat": "{{device}}",
           "refId": "A"
@@ -2044,10 +1870,7 @@
       "type": "bargauge"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "各地點成本趨勢",
       "fieldConfig": {
         "defaults": {
@@ -2116,10 +1939,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (location) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[1h]))",
           "legendFormat": "{{location}}",
           "refId": "A"
@@ -2129,10 +1949,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "datasource": "Prometheus",
       "description": "各地點詳細活動統計",
       "fieldConfig": {
         "defaults": {
@@ -2232,10 +2049,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
@@ -2243,10 +2057,7 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
@@ -2254,10 +2065,7 @@
           "refId": "B"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
@@ -2265,10 +2073,7 @@
           "refId": "C"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
+          "datasource": "Prometheus",
           "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_git_commit_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
@@ -2315,27 +2120,11 @@
   "templating": {
     "list": [
       {
-        "current": {},
-        "hide": 0,
-        "includeAll": false,
-        "label": "Data Source",
-        "multi": false,
-        "name": "datasource",
-        "options": [],
-        "query": "prometheus",
-        "refresh": 1,
-        "regex": "",
-        "type": "datasource"
-      },
-      {
         "current": {
           "text": "All",
           "value": "$__all"
         },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
+        "datasource": "Prometheus",
         "includeAll": true,
         "label": "Location",
         "multi": true,
@@ -2352,10 +2141,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
+        "datasource": "Prometheus",
         "includeAll": true,
         "label": "Device",
         "multi": true,
@@ -2376,10 +2162,7 @@
             "$__all"
           ]
         },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
+        "datasource": "Prometheus",
         "definition": "label_values(claude_code_claude_code_cost_usage_USD_total,user_email)",
         "includeAll": true,
         "label": "User",
