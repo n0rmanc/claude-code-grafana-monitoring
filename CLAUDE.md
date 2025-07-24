@@ -145,7 +145,7 @@ export GRAFANA_API_KEY="your-grafana-api-key"
 #### 已部署實例
 
 Dashboard 已成功部署到：
-- URL: https://monitoring.hohsiang.com.tw/d/claude-code-monitoring-api
+- URL: https://monitoring.example.com/d/claude-code-monitoring-api
 - Dashboard UID: claude-code-monitoring-api
 
 ### 故障排除
