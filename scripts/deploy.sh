@@ -73,6 +73,27 @@ wait_for_pods() {
     done
 }
 
+# 函數：部署儀表板
+deploy_dashboard() {
+    local env=$1
+    
+    print_message $BLUE "部署儀表板..."
+    
+    # 檢查儀表板腳本是否存在
+    local dashboard_script="scripts/dashboard/deploy-dashboard.sh"
+    if [ ! -f "$dashboard_script" ]; then
+        print_message $YELLOW "⚠️  警告: 找不到儀表板部署腳本，跳過儀表板部署"
+        return 0
+    fi
+    
+    # 執行儀表板部署腳本
+    if "$dashboard_script" "$env"; then
+        print_message $GREEN "✓ 儀表板部署成功"
+    else
+        print_message $YELLOW "⚠️  警告: 儀表板部署失敗，但基礎設施已部署成功"
+    fi
+}
+
 # 函數：顯示訪問信息
 show_access_info() {
     local namespace=$1
@@ -96,6 +117,13 @@ show_access_info() {
     print_message $BLUE "- Grafana: http://localhost:3000 (admin/admin)"
     print_message $BLUE "- Prometheus: http://localhost:9090"
     print_message $BLUE "- OTEL Collector: http://localhost:4317 (gRPC), http://localhost:4318 (HTTP)"
+    
+    print_message $GREEN "\n儀表板："
+    if [ "$env" = "dev" ]; then
+        print_message $BLUE "- Claude Code Monitoring: http://localhost:30000/d/claude-code-monitoring-api"
+    else
+        print_message $BLUE "- Claude Code Monitoring: http://localhost:3000/d/claude-code-monitoring-api"
+    fi
 }
 
 # 函數：顯示幫助信息
@@ -185,6 +213,9 @@ main() {
     # 等待 Pod 就緒
     if [ "$wait_pods" = true ]; then
         wait_for_pods "$NAMESPACE"
+        
+        # 部署儀表板 (只有在等待 Pod 就緒時才部署，確保 Grafana 已啟動)
+        deploy_dashboard "$env"
     fi
     
     # 顯示訪問信息
