@@ -87,7 +87,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "legendFormat": "Daily Cost",
           "refId": "A"
         }
@@ -143,7 +143,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[24h]))",
+          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[24h]))",
           "legendFormat": "24h Cost",
           "refId": "A"
         }
@@ -199,7 +199,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(max by (session_id) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}))",
+          "expr": "sum(max by (session_id) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}))",
           "legendFormat": "Active Cost",
           "refId": "A"
         }
@@ -287,7 +287,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "rate(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[5m])",
+          "expr": "rate(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[5m])",
           "legendFormat": "Cost per second",
           "refId": "A"
         }
@@ -360,7 +360,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum by (model) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (model) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "legendFormat": "{{model}}",
           "refId": "A"
         }
@@ -447,7 +447,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[1h]))",
+          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[1h]))",
           "legendFormat": "Cost per hour",
           "refId": "A"
         }
@@ -511,7 +511,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) / (sum(increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) > 0)",
+          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range])) / (sum(increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range])) > 0)",
           "legendFormat": "Cost per line",
           "refId": "A"
         }
@@ -575,7 +575,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) / (sum(increase(claude_code_claude_code_commit_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) > 0)",
+          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range])) / (sum(increase(claude_code_claude_code_commit_count_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range])) > 0)",
           "legendFormat": "Cost per commit",
           "refId": "A"
         }
@@ -639,7 +639,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) / (sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) > 0)",
+          "expr": "sum(increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range])) / (sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range])) > 0)",
           "legendFormat": "Tokens per dollar",
           "refId": "A"
         }
@@ -726,7 +726,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"})",
+          "expr": "sum(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"})",
           "legendFormat": "Cumulative Cost",
           "refId": "A"
         }
@@ -794,7 +794,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum(increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "legendFormat": "Tokens",
           "refId": "A"
         }
@@ -849,7 +849,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum(increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "legendFormat": "Lines",
           "refId": "A"
         }
@@ -904,7 +904,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(increase(claude_code_claude_code_commit_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum(increase(claude_code_claude_code_commit_count_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "legendFormat": "Commits",
           "refId": "A"
         }
@@ -959,7 +959,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "count(count by (session_id) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}))",
+          "expr": "count(count by (session_id) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}))",
           "legendFormat": "Sessions",
           "refId": "A"
         }
@@ -1060,7 +1060,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(rate(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[5m]) * 60)",
+          "expr": "sum(rate(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[5m]) * 60)",
           "legendFormat": "Lines per minute",
           "refId": "A"
         }
@@ -1148,7 +1148,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum by (type) (rate(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[5m]) * 60)",
+          "expr": "sum by (type) (rate(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[5m]) * 60)",
           "legendFormat": "{{type}} tokens/min",
           "refId": "A"
         }
@@ -1213,7 +1213,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "count(count by (user_email) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}))",
+          "expr": "count(count by (user) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}))",
           "legendFormat": "Total Users",
           "refId": "A"
         }
@@ -1265,7 +1265,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "count(count by (user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]) > 0))",
+          "expr": "count(count by (user) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]) > 0))",
           "legendFormat": "Active Users Today",
           "refId": "A"
         }
@@ -1325,7 +1325,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range])) / count(count by (user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]) > 0))",
+          "expr": "sum(increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range])) / count(count by (user) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]) > 0))",
           "legendFormat": "Avg Cost per User",
           "refId": "A"
         }
@@ -1385,7 +1385,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "count(count by (user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]) > 0)) / count(count by (user_email) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}))",
+          "expr": "count(count by (user) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]) > 0)) / count(count by (user) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}))",
           "legendFormat": "Active User Ratio",
           "refId": "A"
         }
@@ -1490,34 +1490,34 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum by (user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (user) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "format": "table",
           "instant": true,
-          "legendFormat": "{{user_email}}",
+          "legendFormat": "{{user}}",
           "refId": "A"
         },
         {
           "datasource": "Prometheus",
-          "expr": "sum by (user_email) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (user) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "format": "table",
           "instant": true,
-          "legendFormat": "{{user_email}}",
+          "legendFormat": "{{user}}",
           "refId": "B"
         },
         {
           "datasource": "Prometheus",
-          "expr": "sum by (user_email) (increase(claude_code_claude_code_commit_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (user) (increase(claude_code_claude_code_commit_count_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "format": "table",
           "instant": true,
-          "legendFormat": "{{user_email}}",
+          "legendFormat": "{{user}}",
           "refId": "C"
         },
         {
           "datasource": "Prometheus",
-          "expr": "sum by (user_email) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (user) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "format": "table",
           "instant": true,
-          "legendFormat": "{{user_email}}",
+          "legendFormat": "{{user}}",
           "refId": "D"
         }
       ],
@@ -1534,18 +1534,18 @@
               "Time": true
             },
             "indexByName": {
+              "user": 0,
               "Value #A": 1,
               "Value #B": 2,
               "Value #C": 3,
-              "Value #D": 4,
-              "user_email": 0
+              "Value #D": 4
             },
             "renameByName": {
+              "user": "User",
               "Value #A": "Cost ($)",
               "Value #B": "Lines",
               "Value #C": "Commits",
-              "Value #D": "Tokens",
-              "user_email": "User"
+              "Value #D": "Tokens"
             }
           }
         },
@@ -1615,8 +1615,8 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum by (user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
-          "legendFormat": "{{user_email}}",
+          "expr": "sum by (user) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
+          "legendFormat": "{{user}}",
           "refId": "A"
         }
       ],
@@ -1660,8 +1660,8 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "count by (user_email, terminal_type) (group by (user_email, terminal_type, session_id) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}))",
-          "legendFormat": "{{user_email}} - {{terminal_type}}",
+          "expr": "count by (user, terminal_type) (group by (user, terminal_type, session_id) (claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}))",
+          "legendFormat": "{{user}} - {{terminal_type}}",
           "refId": "A"
         }
       ],
@@ -1705,8 +1705,8 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum by (user_email, model) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
-          "legendFormat": "{{user_email}} - {{model}}",
+          "expr": "sum by (user, model) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
+          "legendFormat": "{{user}} - {{model}}",
           "refId": "A"
         }
       ],
@@ -1761,7 +1761,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum by (location) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (location) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "legendFormat": "{{location}}",
           "refId": "A"
         }
@@ -1804,7 +1804,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum by (location) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (location) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "legendFormat": "{{location}}",
           "refId": "A"
         }
@@ -1861,7 +1861,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum by (device) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (device) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "legendFormat": "{{device}}",
           "refId": "A"
         }
@@ -1940,7 +1940,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum by (location) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[1h]))",
+          "expr": "sum by (location) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[1h]))",
           "legendFormat": "{{location}}",
           "refId": "A"
         }
@@ -2050,7 +2050,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (location, device, user) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "format": "table",
           "instant": true,
           "legendFormat": "",
@@ -2058,7 +2058,7 @@
         },
         {
           "datasource": "Prometheus",
-          "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (location, device, user) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "format": "table",
           "instant": true,
           "legendFormat": "",
@@ -2066,7 +2066,7 @@
         },
         {
           "datasource": "Prometheus",
-          "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (location, device, user) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "format": "table",
           "instant": true,
           "legendFormat": "",
@@ -2074,7 +2074,7 @@
         },
         {
           "datasource": "Prometheus",
-          "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_git_commit_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (location, device, user) (increase(claude_code_claude_code_git_commit_count_total{location=~\"$location\",device=~\"$device\",user=~\"$user\"}[$__range]))",
           "format": "table",
           "instant": true,
           "legendFormat": "",
@@ -2121,6 +2121,32 @@
     "list": [
       {
         "current": {
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(claude_code_claude_code_cost_usage_USD_total,user)",
+        "includeAll": true,
+        "label": "User",
+        "multi": true,
+        "name": "user",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(claude_code_claude_code_cost_usage_USD_total,user)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
           "text": "All",
           "value": "$__all"
         },
@@ -2131,7 +2157,7 @@
         "name": "location",
         "options": [],
         "query": "label_values(claude_code_claude_code_cost_usage_USD_total, location)",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "sort": 1,
         "type": "query"
@@ -2148,33 +2174,7 @@
         "name": "device",
         "options": [],
         "query": "label_values(claude_code_claude_code_cost_usage_USD_total, device)",
-        "refresh": 1,
-        "regex": "",
-        "sort": 1,
-        "type": "query"
-      },
-      {
-        "current": {
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(claude_code_claude_code_cost_usage_USD_total,user_email)",
-        "includeAll": true,
-        "label": "User",
-        "multi": true,
-        "name": "user_email",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(claude_code_claude_code_cost_usage_USD_total,user_email)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "sort": 1,
         "type": "query"

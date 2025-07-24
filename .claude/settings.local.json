@@ -5,7 +5,9 @@
       "Bash(chmod:*)",
       "Bash(kubectl get pods:*)",
       "Bash(kubectl logs:*)",
-      "Bash(kubectl exec:*)"
+      "Bash(kubectl exec:*)",
+      "Bash(sed:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }
