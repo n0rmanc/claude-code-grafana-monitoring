@@ -2174,7 +2174,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "sum by (location, device) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_cost_usage_USD_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
           "legendFormat": "",
@@ -2184,7 +2184,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "sum by (location, device) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_token_usage_tokens_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
           "legendFormat": "",
@@ -2194,7 +2194,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "sum by (location, device) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_lines_of_code_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
           "legendFormat": "",
@@ -2204,7 +2204,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "sum by (location, device) (increase(claude_code_claude_code_git_commit_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
+          "expr": "sum by (location, device, user_email) (increase(claude_code_claude_code_git_commit_count_total{location=~\"$location\",device=~\"$device\",user_email=~\"$user_email\"}[$__range]))",
           "format": "table",
           "instant": true,
           "legendFormat": "",
@@ -2230,7 +2230,8 @@
               "Value #C": "Lines",
               "Value #D": "Commits",
               "device": "Device",
-              "location": "Location"
+              "location": "Location",
+              "user_email": "User"
             }
           }
         }
