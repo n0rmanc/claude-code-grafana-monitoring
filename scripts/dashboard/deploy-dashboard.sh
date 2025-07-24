@@ -6,13 +6,26 @@
 #   GRAFANA_URL (required): Grafana server URL
 #   GRAFANA_API_KEY (optional): Grafana API key for authentication
 #   METRICS_NAMESPACE (optional): Metrics namespace prefix (default: claude_code)
+#   DASHBOARD_UID (optional): Dashboard UID (default: claude-code-monitoring-api)
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 DASHBOARD_FILE="${SCRIPT_DIR}/claude-code-dashboard.json"
-METRICS_NAMESPACE="${METRICS_NAMESPACE:-claude_code}"
 TEMP_DASHBOARD_FILE=""
+
+# Load .env file if it exists
+if [[ -f "${PROJECT_ROOT}/.env" ]]; then
+    echo "📄 Loading configuration from .env file..."
+    set -a  # automatically export all variables
+    source "${PROJECT_ROOT}/.env"
+    set +a
+fi
+
+# Set defaults after loading .env
+METRICS_NAMESPACE="${METRICS_NAMESPACE:-claude_code}"
+DASHBOARD_UID="${DASHBOARD_UID:-claude-code-monitoring-api}"
 
 # Check required environment variables
 if [[ -z "${GRAFANA_URL:-}" ]]; then
@@ -139,12 +152,12 @@ verify_dashboard() {
         response=$(curl -s -w "\n%{http_code}" \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer $GRAFANA_API_KEY" \
-            "$GRAFANA_URL/api/dashboards/uid/claude-code-monitoring-api")
+            "$GRAFANA_URL/api/dashboards/uid/$DASHBOARD_UID")
     else
         response=$(curl -s -w "\n%{http_code}" \
             -H "Content-Type: application/json" \
             -u admin:admin \
-            "$GRAFANA_URL/api/dashboards/uid/claude-code-monitoring-api")
+            "$GRAFANA_URL/api/dashboards/uid/$DASHBOARD_UID")
     fi
     
     local status_code=$(echo "$response" | tail -n1)
@@ -181,7 +194,7 @@ main() {
     
     echo
     echo "🎉 Dashboard deployment completed successfully!"
-    echo "💡 Access the dashboard at: $GRAFANA_URL/d/claude-code-monitoring-api"
+    echo "💡 Access the dashboard at: $GRAFANA_URL/d/$DASHBOARD_UID"
     echo "👤 Login: Use API key or admin credentials"
 }
 
