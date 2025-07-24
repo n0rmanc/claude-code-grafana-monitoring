@@ -39,18 +39,9 @@ data:
 
       attributes:
         actions:
-          - key: claude.version
+          - key: environment
             action: upsert
-            value: "unknown"
-          - key: claude.session_id
-            action: upsert
-            value: "unknown"
-          - key: claude.user_id
-            action: upsert
-            value: "unknown"
-          - key: claude.organization_id
-            action: upsert
-            value: "unknown"
+            value: "development"
 
     exporters:
       prometheus:
